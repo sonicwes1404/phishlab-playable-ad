@@ -6,20 +6,84 @@
     <title>Playable Ad - Bank Guardian</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
     <div class="background-blur"></div>
     
     <div class="game-wrapper">
         <div class="game-container" id="gameContainer">
+            <div class="crt-overlay"></div>
             
+            <!-- ==========================================
+               ÉCRAN DE SÉLECTION DES PERSONNAGES
+               ========================================== -->
+            <div class="char-select-overlay" id="charSelectScreen">
+                <div class="char-select-content">
+                    <h1 class="select-title">CHOISISSEZ VOTRE HÉROS</h1>
+                    <p class="select-subtitle">Chaque personnage a une faille que l'arnaqueur tentera d'exploiter !</p>
+                    
+                    <div class="char-grid">
+                        <!-- Personnage 1 -->
+                        <div class="char-card" data-char="0">
+                            <div class="card-glow"></div>
+                            <div class="char-card-icon">🎧</div>
+                            <div class="char-preview-wrapper">
+                                <div class="char-pixel-preview char-0-preview"></div>
+                            </div>
+                            <h3 class="char-card-name">Le Jeune Connecté</h3>
+                            <p class="char-card-desc">Il maîtrise la tech, mais adore les bonnes affaires en ligne un peu trop rapides.</p>
+                            <span class="card-badge badge-blue">Gaming & Skins</span>
+                        </div>
+                        
+                        <!-- Personnage 2 -->
+                        <div class="char-card" data-char="1">
+                            <div class="card-glow"></div>
+                            <div class="char-card-icon">☕</div>
+                            <div class="char-preview-wrapper">
+                                <div class="char-pixel-preview char-1-preview"></div>
+                            </div>
+                            <h3 class="char-card-name">La Millennial Épuisée</h3>
+                            <p class="char-card-desc">Débordée par le travail, la fatigue lui fait baisser sa garde face aux faux messages d'aide.</p>
+                            <span class="card-badge badge-purple">Faux Remboursements</span>
+                        </div>
+                        
+                        <!-- Personnage 3 -->
+                        <div class="char-card" data-char="2">
+                            <div class="card-glow"></div>
+                            <div class="char-card-icon">🦯</div>
+                            <div class="char-preview-wrapper">
+                                <div class="char-pixel-preview char-2-preview"></div>
+                            </div>
+                            <h3 class="char-card-name">La Grand-Mère Hacker</h3>
+                            <p class="char-card-desc">Elle adore la technologie, mais son grand cœur la rend vulnérable aux urgences de ses proches.</p>
+                            <span class="card-badge badge-green">Urgence Familiale</span>
+                        </div>
+                        
+                        <!-- Personnage 4 -->
+                        <div class="char-card" data-char="3">
+                            <div class="card-glow"></div>
+                            <div class="char-card-icon">✉️</div>
+                            <div class="char-preview-wrapper">
+                                <div class="char-pixel-preview char-3-preview"></div>
+                            </div>
+                            <h3 class="char-card-name">L'Employé Débordé</h3>
+                            <p class="char-card-desc">Sous pression au bureau, il a tendance à exécuter les ordres urgents sans double vérification.</p>
+                            <span class="card-badge badge-orange">Arnaque au Président</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+               SECTION JEU PRINCIPAL (COMBAT)
+               ========================================== -->
             <!-- SECTION BARRES DE VIE -->
             <header class="status-bar">
                 <div class="character-status player-status">
                     <div class="status-meta">
-                        <span class="char-name">Vous (Millénial)</span>
+                        <span class="char-name" id="playerName">Joueur</span>
                         <span class="char-hp-text" id="playerHpText">100/100 HP</span>
                     </div>
                     <div class="hp-bar-outer">
@@ -31,7 +95,7 @@
 
                 <div class="character-status enemy-status">
                     <div class="status-meta">
-                        <span class="char-name" id="enemyName">Faux Conseiller</span>
+                        <span class="char-name" id="enemyName">L'Ombre</span>
                         <span class="char-hp-text" id="enemyHpText">100/100 HP</span>
                     </div>
                     <div class="hp-bar-outer">
@@ -40,79 +104,29 @@
                 </div>
             </header>
 
-            <!-- SECTION ARÈNE DES SPRITES -->
+            <!-- SECTION ARÈNE DES SPRITES PIXEL ART -->
             <main class="combat-arena" id="combatArena">
                 <!-- Sprite Joueur (Gauche) -->
-                <div class="sprite-container player-sprite-box" id="playerSpriteBox">
-                    <svg viewBox="0 0 100 120" class="sprite-svg" id="playerSprite">
-                        <!-- Ombre au sol -->
-                        <ellipse cx="50" cy="110" rx="25" ry="5" fill="rgba(0,0,0,0.3)" />
-                        <!-- Corps/Buste -->
-                        <path d="M 30,110 L 35,80 C 35,70 65,70 65,80 L 70,110 Z" fill="url(#playerGrad)" />
-                        <!-- Tête -->
-                        <circle cx="50" cy="55" r="18" fill="#ffdbb5" />
-                        <!-- Cheveux modernes -->
-                        <path d="M 32,55 C 32,35 68,35 68,55 C 68,50 60,40 50,42 C 40,40 32,50 32,55 Z" fill="#2d3748" />
-                        <!-- Smartphone en main -->
-                        <g class="smartphone-hand" transform="translate(10, 10)">
-                            <rect x="42" y="70" width="10" height="18" rx="2" fill="#1a202c" stroke="#4facfe" stroke-width="1.5" />
-                            <circle cx="47" cy="85" r="3" fill="#ffdbb5" /> <!-- Main -->
-                            <path d="M 47,72 L 47,82" stroke="#4facfe" stroke-width="1" class="phone-screen-light" />
-                        </g>
-                        <!-- Éléments décoratifs (Écouteurs sans fil) -->
-                        <circle cx="34" cy="56" r="2.5" fill="#ffffff" />
-                        <!-- Yeux expressifs -->
-                        <circle cx="45" cy="54" r="2" fill="#2d3748" />
-                        <circle cx="55" cy="54" r="2" fill="#2d3748" />
-                        <!-- Bouche neutre -->
-                        <path d="M 47,63 Q 50,65 53,63" stroke="#2d3748" stroke-width="1.5" fill="none" id="playerMouth" />
-                        
-                        <!-- Dégradés -->
-                        <defs>
-                            <linearGradient id="playerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#4facfe" />
-                                <stop offset="100%" stop-color="#00f2fe" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
+                <div class="sprite-container player-sprite-box">
+                    <div class="shadow-ellipse"></div>
+                    <div class="combat-sprite-wrapper">
+                        <div class="pixel-sprite player-pixel-sprite" id="playerSprite"></div>
+                    </div>
                 </div>
 
                 <!-- Sprite Arnaqueur (Droite) -->
-                <div class="sprite-container enemy-sprite-box" id="enemySpriteBox">
-                    <svg viewBox="0 0 100 120" class="sprite-svg" id="enemySprite">
-                        <!-- Ombre au sol -->
-                        <ellipse cx="50" cy="110" rx="25" ry="5" fill="rgba(0,0,0,0.3)" />
-                        <!-- Corps/Capuche sombre -->
-                        <path d="M 30,110 L 35,75 C 35,60 65,60 65,75 L 70,110 Z" fill="url(#enemyGrad)" />
-                        <!-- Visage d'ombre -->
-                        <circle cx="50" cy="55" r="18" fill="#1a1c23" />
-                        <!-- Intérieur de la capuche -->
-                        <path d="M 32,55 C 32,32 68,32 68,55 C 65,70 35,70 32,55 Z" fill="#0f0f12" />
-                        <!-- Yeux rouges mystérieux / Lunettes de soleil d'arnaqueur -->
-                        <polygon points="38,50 46,50 44,56 38,54" fill="#ff0844" class="scammer-eyes" />
-                        <polygon points="62,50 54,50 56,56 62,54" fill="#ff0844" class="scammer-eyes" />
-                        <!-- Téléphone louche -->
-                        <g class="scammer-phone" transform="translate(-10, 8)">
-                            <rect x="48" y="70" width="8" height="15" rx="1.5" fill="#2d3748" stroke="#ff0844" stroke-width="1" />
-                            <circle cx="44" cy="78" r="3.5" fill="#ff0844" opacity="0.3" class="phone-glow" />
-                        </g>
-
-                        <!-- Dégradés -->
-                        <defs>
-                            <linearGradient id="enemyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#ff0844" />
-                                <stop offset="100%" stop-color="#ffb199" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
+                <div class="sprite-container enemy-sprite-box">
+                    <div class="shadow-ellipse"></div>
+                    <div class="combat-sprite-wrapper">
+                        <div class="pixel-sprite enemy-pixel-sprite" id="enemySprite"></div>
+                    </div>
                 </div>
             </main>
 
             <!-- SECTION ZONE DE DIALOGUE -->
             <section class="dialogue-box">
-                <div class="speaker-label" id="speakerLabel">Faux Conseiller</div>
+                <div class="speaker-label" id="speakerLabel">L'Ombre</div>
                 <div class="dialogue-text" id="dialogueText">
-                    <!-- Texte animé en JS -->
                     Connexion établie...
                 </div>
             </section>
@@ -155,6 +169,6 @@
         </div>
     </div>
 
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=10"></script>
 </body>
 </html>

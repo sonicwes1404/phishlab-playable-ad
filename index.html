@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playable Ad - Bank Guardian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+    <div class="background-blur"></div>
+    
+    <div class="game-wrapper">
+        <div class="game-container" id="gameContainer">
+            
+            <!-- SECTION BARRES DE VIE -->
+            <header class="status-bar">
+                <div class="character-status player-status">
+                    <div class="status-meta">
+                        <span class="char-name">Vous (Millénial)</span>
+                        <span class="char-hp-text" id="playerHpText">100/100 HP</span>
+                    </div>
+                    <div class="hp-bar-outer">
+                        <div class="hp-bar-inner player-hp" id="playerHpBar" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <div class="versus-badge">VS</div>
+
+                <div class="character-status enemy-status">
+                    <div class="status-meta">
+                        <span class="char-name" id="enemyName">Faux Conseiller</span>
+                        <span class="char-hp-text" id="enemyHpText">100/100 HP</span>
+                    </div>
+                    <div class="hp-bar-outer">
+                        <div class="hp-bar-inner enemy-hp" id="enemyHpBar" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- SECTION ARÈNE DES SPRITES -->
+            <main class="combat-arena" id="combatArena">
+                <!-- Sprite Joueur (Gauche) -->
+                <div class="sprite-container player-sprite-box" id="playerSpriteBox">
+                    <svg viewBox="0 0 100 120" class="sprite-svg" id="playerSprite">
+                        <!-- Ombre au sol -->
+                        <ellipse cx="50" cy="110" rx="25" ry="5" fill="rgba(0,0,0,0.3)" />
+                        <!-- Corps/Buste -->
+                        <path d="M 30,110 L 35,80 C 35,70 65,70 65,80 L 70,110 Z" fill="url(#playerGrad)" />
+                        <!-- Tête -->
+                        <circle cx="50" cy="55" r="18" fill="#ffdbb5" />
+                        <!-- Cheveux modernes -->
+                        <path d="M 32,55 C 32,35 68,35 68,55 C 68,50 60,40 50,42 C 40,40 32,50 32,55 Z" fill="#2d3748" />
+                        <!-- Smartphone en main -->
+                        <g class="smartphone-hand" transform="translate(10, 10)">
+                            <rect x="42" y="70" width="10" height="18" rx="2" fill="#1a202c" stroke="#4facfe" stroke-width="1.5" />
+                            <circle cx="47" cy="85" r="3" fill="#ffdbb5" /> <!-- Main -->
+                            <path d="M 47,72 L 47,82" stroke="#4facfe" stroke-width="1" class="phone-screen-light" />
+                        </g>
+                        <!-- Éléments décoratifs (Écouteurs sans fil) -->
+                        <circle cx="34" cy="56" r="2.5" fill="#ffffff" />
+                        <!-- Yeux expressifs -->
+                        <circle cx="45" cy="54" r="2" fill="#2d3748" />
+                        <circle cx="55" cy="54" r="2" fill="#2d3748" />
+                        <!-- Bouche neutre -->
+                        <path d="M 47,63 Q 50,65 53,63" stroke="#2d3748" stroke-width="1.5" fill="none" id="playerMouth" />
+                        
+                        <!-- Dégradés -->
+                        <defs>
+                            <linearGradient id="playerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#4facfe" />
+                                <stop offset="100%" stop-color="#00f2fe" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <!-- Sprite Arnaqueur (Droite) -->
+                <div class="sprite-container enemy-sprite-box" id="enemySpriteBox">
+                    <svg viewBox="0 0 100 120" class="sprite-svg" id="enemySprite">
+                        <!-- Ombre au sol -->
+                        <ellipse cx="50" cy="110" rx="25" ry="5" fill="rgba(0,0,0,0.3)" />
+                        <!-- Corps/Capuche sombre -->
+                        <path d="M 30,110 L 35,75 C 35,60 65,60 65,75 L 70,110 Z" fill="url(#enemyGrad)" />
+                        <!-- Visage d'ombre -->
+                        <circle cx="50" cy="55" r="18" fill="#1a1c23" />
+                        <!-- Intérieur de la capuche -->
+                        <path d="M 32,55 C 32,32 68,32 68,55 C 65,70 35,70 32,55 Z" fill="#0f0f12" />
+                        <!-- Yeux rouges mystérieux / Lunettes de soleil d'arnaqueur -->
+                        <polygon points="38,50 46,50 44,56 38,54" fill="#ff0844" class="scammer-eyes" />
+                        <polygon points="62,50 54,50 56,56 62,54" fill="#ff0844" class="scammer-eyes" />
+                        <!-- Téléphone louche -->
+                        <g class="scammer-phone" transform="translate(-10, 8)">
+                            <rect x="48" y="70" width="8" height="15" rx="1.5" fill="#2d3748" stroke="#ff0844" stroke-width="1" />
+                            <circle cx="44" cy="78" r="3.5" fill="#ff0844" opacity="0.3" class="phone-glow" />
+                        </g>
+
+                        <!-- Dégradés -->
+                        <defs>
+                            <linearGradient id="enemyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff0844" />
+                                <stop offset="100%" stop-color="#ffb199" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </main>
+
+            <!-- SECTION ZONE DE DIALOGUE -->
+            <section class="dialogue-box">
+                <div class="speaker-label" id="speakerLabel">Faux Conseiller</div>
+                <div class="dialogue-text" id="dialogueText">
+                    <!-- Texte animé en JS -->
+                    Connexion établie...
+                </div>
+            </section>
+
+            <!-- SECTION BOUTONS DE CHOIX -->
+            <footer class="options-box" id="optionsBox">
+                <!-- Rempli dynamiquement en JS -->
+            </footer>
+
+            <!-- OVERLAY ÉCRAN DE FIN -->
+            <div class="overlay" id="endScreen">
+                <div class="end-content">
+                    <div class="end-icon" id="endIcon">🏆</div>
+                    <h2 class="end-title" id="endTitle">Victoire !</h2>
+                    <p class="end-description" id="endDescription">
+                        Vous avez parfaitement déjoué toutes les tentatives d'arnaque bancaire !
+                    </p>
+                    
+                    <!-- Fiche score / statistiques -->
+                    <div class="end-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Vos PV restants</span>
+                            <span class="stat-value" id="playerFinalHp">100 HP</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Arnaques déjouées</span>
+                            <span class="stat-value" id="scamsBlocked">3 / 3</span>
+                        </div>
+                    </div>
+
+                    <!-- Call To Action (Téléchargement) -->
+                    <button class="cta-button" id="ctaBtn">
+                        <span class="cta-glow"></span>
+                        Blinder ma sécurité en 5 min
+                    </button>
+                    <p class="cta-subtext">Gratuit • Disponible sur iOS et Android</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="app.js?v=2"></script>
+</body>
+</html>

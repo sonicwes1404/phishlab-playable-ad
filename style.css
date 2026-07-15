@@ -1,0 +1,531 @@
+/* ==========================================
+   DESIGN SYSTEM & CONSTANTES (STYLE CSS)
+   ========================================== */
+:root {
+    --bg-dark: #0b0c10;
+    --card-dark: #1f2833;
+    --text-light: #f5f7fa;
+    --text-gray: #c5c6c7;
+    
+    /* Couleurs Thématiques Néon */
+    --primary: #4facfe;       /* Joueur - Bleu néon */
+    --primary-glow: rgba(79, 172, 254, 0.4);
+    --secondary: #00f2fe;     /* Joueur accent - Cyan */
+    
+    --danger: #ff0844;        /* Arnaqueur - Rouge néon */
+    --danger-glow: rgba(255, 8, 68, 0.4);
+    --warning: #f6d365;       /* Hésitation - Jaune néon */
+    
+    /* Typographie */
+    --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ==========================================
+   RESET & STRUCTURE GENERALE
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-dark);
+    font-family: var(--font-family);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Fond de l'espace avec de légères lueurs de couleurs */
+.background-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at 10% 20%, rgba(79, 172, 254, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 8, 68, 0.1) 0%, transparent 40%);
+    filter: blur(40px);
+}
+
+/* Wrapper pour simuler un mobile centré */
+.game-wrapper {
+    width: 100%;
+    max-width: 430px;
+    height: 100vh;
+    max-height: 850px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+/* Conteneur principal de la Playable Ad */
+.game-container {
+    background-color: #12131a;
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
+    border: 2px stroke rgba(255, 255, 255, 0.05);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+                0 0 40px rgba(79, 172, 254, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ==========================================
+   STATUS BAR (BARRES DE VIE)
+   ========================================== */
+.status-bar {
+    padding: 20px;
+    background: linear-gradient(180deg, rgba(31, 40, 51, 0.5) 0%, transparent 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 10;
+}
+
+.character-status {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.status-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.player-status .char-name {
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+}
+
+.enemy-status .char-name {
+    color: var(--danger);
+    text-shadow: 0 0 10px rgba(255, 8, 68, 0.3);
+}
+
+.char-hp-text {
+    color: var(--text-gray);
+}
+
+/* Conteneurs extérieurs des jauges */
+.hp-bar-outer {
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Remplissage des jauges */
+.hp-bar-inner {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
+}
+
+.player-hp {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.enemy-hp {
+    background: linear-gradient(90deg, var(--danger), #ffb199);
+    box-shadow: 0 0 10px var(--danger-glow);
+}
+
+/* Badge Versus */
+.versus-badge {
+    background: #1a1b24;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-gray);
+    font-size: 0.65rem;
+    font-weight: 800;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================
+   COMBAT ARENA (SPRITES)
+   ========================================== */
+.combat-arena {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding-bottom: 20px;
+    background: radial-gradient(circle at center, #1b1d28 0%, #12131a 80%);
+    position: relative;
+}
+
+.sprite-container {
+    width: 140px;
+    height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transition: transform 0.3s ease;
+}
+
+.sprite-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
+}
+
+/* Animations d'attente (Idle / Flottement) */
+.player-sprite-box {
+    animation: idleFloatPlayer 4s ease-in-out infinite;
+}
+
+.enemy-sprite-box {
+    animation: idleFloatEnemy 4.2s ease-in-out infinite;
+}
+
+/* Sursaut de dégâts (Damage Shake) */
+.shake-character {
+    animation: damageShake 0.4s ease-in-out;
+}
+
+/* Animation d'attaque (Dash) */
+.dash-attack-player {
+    animation: dashAttackRight 0.5s ease-in-out;
+}
+
+.dash-attack-enemy {
+    animation: dashAttackLeft 0.5s ease-in-out;
+}
+
+/* Effets des yeux de l'arnaqueur et de l'écran */
+.scammer-eyes {
+    animation: pulseEyes 2s ease-in-out infinite;
+}
+
+.phone-screen-light {
+    animation: pulseScreen 1.5s ease-in-out infinite;
+}
+
+/* ==========================================
+   DIALOGUE BOX
+   ========================================== */
+.dialogue-box {
+    background-color: #1a1c24;
+    border: 1.5px solid rgba(255, 255, 255, 0.05);
+    margin: 0 15px 15px 15px;
+    padding: 15px;
+    border-radius: 16px;
+    min-height: 90px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.speaker-label {
+    position: absolute;
+    top: -12px;
+    left: 15px;
+    background: var(--danger);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 10px var(--danger-glow);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.speaker-player .speaker-label {
+    background: var(--primary);
+    box-shadow: 0 4px 10px var(--primary-glow);
+}
+
+.dialogue-text {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* ==========================================
+   OPTIONS BOX (BOUTONS DE CHOIX)
+   ========================================== */
+.options-box {
+    padding: 0 15px 20px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-btn {
+    width: 100%;
+    background-color: #1e222d;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: left;
+    color: var(--text-gray);
+    font-family: var(--font-family);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.option-btn:hover {
+    color: var(--text-light);
+    background-color: #262c3a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: rgba(79, 172, 254, 0.3);
+}
+
+.option-btn:active {
+    transform: translateY(1px);
+}
+
+/* Bordures de survol stylisées identiques pour tous les boutons */
+.option-btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background-color: transparent;
+    transition: background-color 0.25s ease;
+}
+
+.option-btn:hover::after {
+    background-color: var(--primary);
+}
+
+/* ==========================================
+   OVERLAY DE FIN (ÉCRAN DE VICTOIRE/DÉFAITE)
+   ========================================== */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(11, 12, 16, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.end-content {
+    text-align: center;
+    width: 100%;
+    max-width: 320px;
+    transform: scale(0.9);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.overlay.active .end-content {
+    transform: scale(1);
+}
+
+.end-icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
+    animation: floatIcon 3s ease-in-out infinite;
+}
+
+.end-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.end-description {
+    color: var(--text-gray);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+/* Tableau de bord de statistiques de fin */
+.end-stats {
+    background-color: #1a1c24;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.stat-label {
+    color: var(--text-gray);
+}
+
+.stat-value {
+    font-weight: 800;
+    color: var(--text-light);
+}
+
+/* Bouton Call-to-Action Premium */
+.cta-button {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border: none;
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0b0c10;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 25px var(--primary-glow);
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px var(--primary-glow);
+}
+
+.cta-glow {
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-20deg);
+    animation: shineSweep 3s infinite;
+}
+
+.cta-subtext {
+    margin-top: 10px;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 600;
+}
+
+/* ==========================================
+   ANIMATIONS KEYFRAMES
+   ========================================== */
+@keyframes idleFloatPlayer {
+    0%, 100% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(-4px) scaleY(1.02); }
+}
+
+@keyframes idleFloatEnemy {
+    0%, 100% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(-5px) scaleY(1.01); }
+}
+
+@keyframes damageShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}
+
+@keyframes dashAttackRight {
+    0% { transform: translateX(0) scale(1); }
+    30% { transform: translateX(-15px) scale(0.95); }
+    50% { transform: translateX(40px) scale(1.1); }
+    100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes dashAttackLeft {
+    0% { transform: translateX(0) scale(1); }
+    30% { transform: translateX(15px) scale(0.95); }
+    50% { transform: translateX(-40px) scale(1.1); }
+    100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes shineSweep {
+    0% { left: -150%; }
+    50% { left: 150%; }
+    100% { left: 150%; }
+}
+
+@keyframes pulseEyes {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; filter: drop-shadow(0 0 2px #ff0844); }
+}
+
+@keyframes pulseScreen {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; filter: drop-shadow(0 0 3px #4facfe); }
+}
+
+/* Flash de dégâts sur le fond du jeu */
+.flash-red {
+    animation: flashRedAnimation 0.4s ease-out;
+}
+
+@keyframes flashRedAnimation {
+    0% { background-color: rgba(255, 8, 68, 0.4); }
+    100% { background-color: transparent; }
+}
+
+.flash-cyan {
+    animation: flashCyanAnimation 0.4s ease-out;
+}
+
+@keyframes flashCyanAnimation {
+    0% { background-color: rgba(0, 242, 254, 0.4); }
+    100% { background-color: transparent; }
+}

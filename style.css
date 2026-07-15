@@ -253,7 +253,7 @@ body {
 .char-pixel-preview {
     width: 102px;
     height: 72px;
-    background-image: url('assets/spritesheet.png');
+    background-image: url('spritesheet.png');
     background-size: 500% 400%;
     background-repeat: no-repeat;
     image-rendering: pixelated;
@@ -455,7 +455,7 @@ body {
 .pixel-sprite {
     width: 140px;
     height: 98px;
-    background-image: url('assets/spritesheet.png');
+    background-image: url('spritesheet.png');
     background-size: 500% 400%;
     background-repeat: no-repeat;
     image-rendering: pixelated;
